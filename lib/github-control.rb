@@ -4,6 +4,7 @@ require 'rest_client'
 
 module GithubControl
   class Error < StandardError; end
+  class APIError < Error; end
   class ProblemWithOptions < Error; end
 end
 
@@ -11,6 +12,7 @@ $:.unshift File.dirname(__FILE__)
 
 require 'github-control/version'
 require 'github-control/cli'
+require 'github-control/console'
 require 'github-control/user'
 require 'github-control/repository'
 require 'github-control/collaborators'

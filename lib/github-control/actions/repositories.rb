@@ -16,7 +16,7 @@ module GithubControl
       end
 
       def user
-        @cli.user_for(options[:user_name] || @cli.user_name)
+        @cli.console.user_for(options[:user_name] || @cli.console.current_user.name)
       end
     end
   end

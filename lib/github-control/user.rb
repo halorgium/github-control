@@ -6,9 +6,21 @@ module GithubControl
     end
     attr_reader :cli, :name
 
+    def public_repositories
+      repositories.select do |r|
+        r.public?
+      end
+    end
+
+    def private_repositories
+      repositories.select do |r|
+        r.private?
+      end
+    end
+
     def repositories
       json_data["user"]["repositories"].sort_by {|r| r["name"]}.map do |data|
-        @cli.user_for(data["owner"]).repo_for(data["name"])
+        @cli.user_for(data["owner"]).repo_for(data["name"], data["private"] ? :private : :public)
         # "watchers"=>1,
         # "private"=>false,
         # "fork"=>false,
@@ -23,8 +35,8 @@ module GithubControl
       JSON.parse(@cli.http_post("/api/v1/json/#{@name}"))
     end
 
-    def repo_for(name)
-      @repos[name] ||= Repository.new(self, name)
+    def repo_for(name, access)
+      @repos[name] ||= Repository.new(self, name, access)
     end
   end
 end

@@ -24,7 +24,7 @@ module GithubControl
       end
 
       def user
-        @cli.user_for(options[:user_name] || raise(ProblemWithOptions, "Please specify a user"))
+        @cli.console.user_for(options[:user_name] || raise(ProblemWithOptions, "Please specify a user"))
       end
     end
   end

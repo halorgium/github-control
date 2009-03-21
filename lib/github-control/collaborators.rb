@@ -24,13 +24,15 @@ module GithubControl
     end
 
     def set
-      json_data["collaborators"].map do |name|
-        @repository.owner.cli.user_for(name)
+      @set ||= begin
+        json_data["collaborators"].map do |name|
+          @repository.owner.cli.user_for(name)
+        end
       end
     end
 
     def json_data
-      JSON.parse(@repository.owner.cli.http_get("/api/v2/json/repos/show/#{@repository.owner.name}/#{@repository.name}/collaborators"))
+      @repository.owner.cli.api_post("v2", "/repos/show/#{@repository.owner.name}/#{@repository.name}/collaborators")
     end
   end
 end
