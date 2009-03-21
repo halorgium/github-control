@@ -17,6 +17,7 @@ require 'github-control/collaborators'
 
 require 'github-control/action'
 require 'github-control/actions/repositories'
+require 'github-control/actions/shell'
 require 'github-control/actions/collaborators'
 require 'github-control/actions/add_collaborators'
 require 'github-control/actions/remove_collaborators'

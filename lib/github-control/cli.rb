@@ -31,6 +31,8 @@ module GithubControl
       case action_name
       when "list"
         Actions::Repositories.new(self)
+      when "shell"
+        Actions::Shell.new(self)
       when "collab"
         Actions::Collaborators.new(self)
       when "add_collab"
