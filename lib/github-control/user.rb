@@ -18,6 +18,16 @@ module GithubControl
       end
     end
 
+    def add_repository(name, access)
+      @cli.scrape_post("/repositories",
+                       {"repository[name]" => name,
+                        "repository[description]" => "",
+                        "repository[homepage]" => "",
+                        "repository[public]" => (access == :public)},
+                        :accept => 'text/html')
+      repo_for(name, access)
+    end
+
     def repositories
       json_data["user"]["repositories"].sort_by {|r| r["name"]}.map do |data|
         @cli.user_for(data["owner"]).repo_for(data["name"], data["private"] ? :private : :public)
