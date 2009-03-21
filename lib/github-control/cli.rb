@@ -140,7 +140,7 @@ module GithubControl
         end
 
         opts.on("-v", "--version", "Display the github version, and exit.") do
-          puts "Github version #{Github::VERSION}"
+          puts "Github Control version #{GithubControl::VERSION}"
           exit
         end
 
