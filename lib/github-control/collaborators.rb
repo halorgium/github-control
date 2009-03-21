@@ -1,4 +1,4 @@
-module Github
+module GithubControl
   class Collaborators
     include Enumerable
 

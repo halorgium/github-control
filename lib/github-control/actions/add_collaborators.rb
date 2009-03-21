@@ -1,4 +1,4 @@
-module Github
+module GithubControl
   module Actions
     class AddCollaborators < Action
       def add_options(parser)

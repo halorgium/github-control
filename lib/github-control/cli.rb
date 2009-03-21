@@ -1,6 +1,6 @@
 require 'optparse'
 
-module Github
+module GithubControl
   class CLI
     def self.execute(args)
       new(args).run

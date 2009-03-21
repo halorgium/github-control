@@ -1,4 +1,4 @@
-module Github
+module GithubControl
   class Repository
     def initialize(owner, name)
       @owner, @name = owner, name

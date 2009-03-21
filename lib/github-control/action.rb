@@ -1,4 +1,4 @@
-module Github
+module GithubControl
   class Action
     def initialize(cli)
       @cli = cli

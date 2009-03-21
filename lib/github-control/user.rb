@@ -1,4 +1,4 @@
-module Github
+module GithubControl
   class User
     def initialize(cli, name)
       @cli, @name = cli, name
