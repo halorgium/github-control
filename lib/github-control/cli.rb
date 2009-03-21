@@ -151,5 +151,9 @@ module GithubControl
         opts.separator ""
       end
     end
+
+    def inspect
+      "#<#{self.class} logged in as #{current_user.name.inspect}>"
+    end
   end
 end
