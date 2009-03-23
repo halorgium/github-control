@@ -16,7 +16,7 @@ spec = Gem::Specification.new do |s|
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
   s.require_paths = ["lib"]
 
-  s.files = ["config/config.yaml"]
+  s.files = ["config/example.yml"]
   %w{ bin lib spec }.map do |dir|
     s.files += Dir["#{dir}/**/*.rb"]
   end
