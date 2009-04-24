@@ -20,5 +20,9 @@ module GithubControl
     def collaborators
       @collaborators ||= Collaborators.new(self)
     end
+
+    def post_receive_urls
+      @post_receive_urls ||= PostReceiveUrls.new(self)
+    end
   end
 end

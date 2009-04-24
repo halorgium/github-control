@@ -1,6 +1,7 @@
 require 'yaml'
 require 'json'
 require 'rest_client'
+require 'nokogiri'
 
 module GithubControl
   class Error < StandardError; end
@@ -16,6 +17,7 @@ require 'github-control/console'
 require 'github-control/user'
 require 'github-control/repository'
 require 'github-control/collaborators'
+require 'github-control/post_receive_urls'
 
 require 'github-control/action'
 require 'github-control/actions/repositories'

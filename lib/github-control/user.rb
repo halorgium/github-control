@@ -25,12 +25,12 @@ module GithubControl
                         "repository[homepage]" => "",
                         "repository[public]" => (access == :public)},
                         :accept => 'text/html')
-      repo_for(name, access)
+      add_repo_for(name, access)
     end
 
     def repositories
       json_data["user"]["repositories"].sort_by {|r| r["name"]}.map do |data|
-        @cli.user_for(data["owner"]).repo_for(data["name"], data["private"] ? :private : :public)
+        @cli.user_for(data["owner"]).add_repo_for(data["name"], data["private"] ? :private : :public)
         # "watchers"=>1,
         # "private"=>false,
         # "fork"=>false,
@@ -41,11 +41,17 @@ module GithubControl
       end
     end
 
+    def repo_for(name)
+      repositories.find do |r|
+        r.name == name
+      end
+    end
+
     def json_data
       JSON.parse(@cli.http_post("/api/v1/json/#{@name}"))
     end
 
-    def repo_for(name, access)
+    def add_repo_for(name, access)
       @repos[name] ||= Repository.new(self, name, access)
     end
   end
