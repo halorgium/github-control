@@ -1,5 +1,12 @@
 require 'yaml'
-require 'json'
+
+begin
+  require 'json'
+rescue LoadError
+  require 'rubygems'
+  require 'json'
+end
+
 require 'rest_client'
 require 'nokogiri'
 
