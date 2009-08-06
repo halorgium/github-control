@@ -29,7 +29,7 @@ module GithubControl
     end
 
     def repositories
-      json_data["user"]["repositories"].sort_by {|r| r["name"]}.map do |data|
+      json_data["repositories"].sort_by {|r| r["name"]}.map do |data|
         @cli.user_for(data["owner"]).add_repo_for(data["name"], data["private"] ? :private : :public)
         # "watchers"=>1,
         # "private"=>false,
@@ -48,7 +48,7 @@ module GithubControl
     end
 
     def json_data
-      JSON.parse(@cli.http_post("/api/v1/json/#{@name}"))
+      JSON.parse(@cli.http_post("/api/v2/json/repos/show/#{@name}"))
     end
 
     def add_repo_for(name, access)
