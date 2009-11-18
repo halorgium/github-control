@@ -8,7 +8,7 @@ task :default => :spec
 desc "Run specs"
 Spec::Rake::SpecTask.new(:spec) do |t|
   t.libs << "lib" << "spec"
-  t.spec_opts << "-c -D"
+  t.spec_opts << "-c -D -b"
   t.pattern = "spec/**/*_spec.rb"
 end
 
