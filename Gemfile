@@ -10,6 +10,7 @@ only :test do
   gem "diff-lcs"
   gem "rr"
   gem "randexp"
+  gem "ruby-debug"
 end
 
 disable_system_gems
