@@ -1,3 +1,5 @@
 spec/config.yml
 tmp
 pkg
+gbin
+vendor
