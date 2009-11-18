@@ -1,5 +1,16 @@
 require 'rake/gempackagetask'
+require "spec/rake/spectask"
 require File.dirname(__FILE__) + '/lib/github-control/version'
+
+desc "Default: run specs"
+task :default => :spec
+
+desc "Run specs"
+Spec::Rake::SpecTask.new(:spec) do |t|
+  t.libs << "lib" << "spec"
+  t.spec_opts << "-c -D"
+  t.pattern = "spec/**/*_spec.rb"
+end
 
 spec = Gem::Specification.new do |s|
   s.name = "github-control"
