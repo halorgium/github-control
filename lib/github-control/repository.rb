@@ -24,5 +24,11 @@ module GithubControl
     def post_receive_urls
       @post_receive_urls ||= PostReceiveUrls.new(self)
     end
+
+    def destroy
+      response = @owner.cli.api_post("v2", "/repos/delete/#{@name}")
+      @owner.cli.http_post("/api/v2/json/repos/delete/#{@name}",
+        :delete_token => response["delete_token"])
+    end
   end
 end
