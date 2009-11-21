@@ -1,9 +1,10 @@
 module GithubControl
   class Repository
+    attr_reader :owner, :name, :access
+
     def initialize(owner, name, access)
       @owner, @name, @access = owner, name, access
     end
-    attr_reader :owner, :name, :access
 
     def private?
       @access == :private
@@ -26,9 +27,7 @@ module GithubControl
     end
 
     def destroy
-      response = @owner.cli.api_post("v2", "/repos/delete/#{@name}")
-      @owner.cli.http_post("/api/v2/json/repos/delete/#{@name}",
-        :delete_token => response["delete_token"])
+      @owner.repositories.delete(@name)
     end
   end
 end

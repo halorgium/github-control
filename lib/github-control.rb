@@ -23,6 +23,7 @@ require 'github-control/cli'
 require 'github-control/console'
 require 'github-control/user'
 require 'github-control/repository'
+require 'github-control/repositories'
 require 'github-control/collaborators'
 require 'github-control/post_receive_urls'
 

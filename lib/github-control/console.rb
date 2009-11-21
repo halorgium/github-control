@@ -13,8 +13,9 @@ module GithubControl
       @users[name] ||= User.new(self, name)
     end
 
-    def api_post(version, path, headers = {})
-      data = JSON.parse(http_post("/api/#{version}/json#{path}", headers))
+    def post(path, params={})
+      params.merge!(:login => user_name, :token => user_token)
+      data = JSON.parse(RestClient.post(url_for(path), params))
       if error = data["error"]
         raise APIError, error.first["error"]
       else
@@ -22,33 +23,12 @@ module GithubControl
       end
     end
 
-    def http_get(path, headers = {})
-      RestClient.get(url_for(path), headers)
-    end
-
-    def http_post(path, params = {}, headers = {})
-      params = {:login => user_name, :token => user_token}.merge(params)
-      raw_post(path, params, headers)
-    end
-
-    def scrape_get(path, headers = {})
-      headers = {:cookie => cookies}.merge(headers)
-      http_get(path, headers)
-    end
-
-    def scrape_post(path, params = {}, headers = {})
-      headers = {:cookie => cookies}.merge(headers)
-      raw_post(path, params, headers)
-    end
-
-    def raw_post(path, params = {}, headers = {}, extra_options = {})
-      # TODO: RestClient.post(url_for(path), params, headers)
-      options = {:method => :post, :url => url_for(path), :payload => params, :headers => headers}.merge(extra_options)
-      RestClient::Request.execute(options)
+    def get(path, params={})
+      RestClient.get(url_for(path), params)
     end
 
     def url_for(path)
-      "https://github.com#{path}"
+      "http://github.com/api/v2/json#{path}"
     end
 
     def cookies

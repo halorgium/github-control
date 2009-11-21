@@ -2,50 +2,51 @@ require "spec_helper"
 
 describe "Github Control" do
   def config
-    config  = YAML.load_file("config.yml")["test"]
+    @config ||= YAML.load_file("spec/config.yml")["user"]
   end
 
   def console
-    console = GithubControl::Console.new(config)
+    @console ||= GithubControl::Console.new(config)
   end
 
   def current_user
-    console.current_user
+    @user ||= console.current_user
+  end
+
+  before(:all) do
+    RestClient.log = "restclient.log"
   end
 
   before(:each) do
-    current_user.repositories.each { |r| r.destroy }
+    current_user.repositories.destroy
   end
 
-  it "creates a repository" do
-    lambda {
-      current_user.add_repository("test-repo", :public)
-    }.should change(repo.repositories.cout).by(1)
-
-    current_user.repo_for("test-repo").should be_public
+  it "creates a public repository" do
+    current_user.should have(:no).repositories
+    current_user.repositories.create("public-repo", :public)
+    current_user.should have(1).repositories
+    current_user.repositories["public-repo"].should be_public
   end
 
-  it "creates private and public repositories" do
-    5.times { |i|
-      current_user.add_repository("test-repo-#{i}", i.even? ? :public : :private
-    }
-
-    current_user.should have(5).repositories
-    current_user.should have(2).private_repositories
-    current_user.should have(2).public_repositories
+  it "creates a private repository" do
+    current_user.should have(:no).private_repositories
+    current_user.repositories.create("private-repo", :private)
+    current_user.should have(1).private_repositories
+    current_user.repositories["private-repo"].should be_private
   end
 
   it "creates and destroys collaborators on a repository" do
-    repo = current_user.add_repository("test-repo", :public)
-    repo.collaborators << GitHubControl::User.new("atmos")
-    repo.collaborators << GitHubControl::User.new("tim")
-    repo.collaborators << GitHubControl::User.new("ben")
-    repo.collaborators << GitHubControl::User.new("sr")
+    repo = current_user.repositories.create("test-repo", :public)
+    repo.collaborators << GithubControl::User.new("atmos", console)
+    repo.collaborators << GithubControl::User.new("tim", console)
+    repo.collaborators << GithubControl::User.new("ben", console)
+    repo.collaborators << GithubControl::User.new("sr", console)
 
     repo.should have(4).collaborators
 
     # sorry dude :(
     repo.collaborators.delete("atmos")
+    repo.should have(3).collaborators
   end
 
   it "adds and remove post-receive urls"
