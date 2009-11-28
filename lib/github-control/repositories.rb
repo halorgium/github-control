@@ -12,7 +12,9 @@ module GithubControl
         :public  => access == :public ? 1 : 0
       )
 
-      set << Repository.new(@user, name, access)
+      repo = Repository.new(@user, name, access)
+      set << repo
+      repo
     end
 
     def [](name)
