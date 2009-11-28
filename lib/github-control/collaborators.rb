@@ -8,14 +8,14 @@ module GithubControl
       @repository = repository
     end
 
-    def <<(user)
+    def create(user)
       @repository.owner.cli.post("/repos/collaborators/" \
-        "#{@repository.name}/add/#{user.name}")
+        "#{@repository.name}/add/#{user}")
     end
 
     def delete(user)
       @repository.owner.cli.post("/repos/collaborators/" \
-        "#{@repository.owner.name}/remove/#{user.name}")
+        "#{@repository.name}/remove/#{user}")
     end
 
     def each(&block)
