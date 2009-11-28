@@ -36,20 +36,24 @@ module GithubControl
     end
 
     def session_cookie
-      response = raw_post("/session", {:login => user_name, :password => user_password}, {}, :auto_redirect => false)
+      response = raw_post("/session", {:login => user_name,
+        :password => user_password}, {}, :auto_redirect => false)
       response.headers[:set_cookie].split(";").first
     end
 
     def user_name
-      @user_config["name"] || raise(ProblemWithOptions, "You need to provide the user name in the YAML file")
+      @user_config["name"] ||
+        raise(ProblemWithOptions, "You need to provide the user name in the YAML file")
     end
 
     def user_token
-      @user_config["token"] || raise(ProblemWithOptions, "You need to provide the user token in the YAML file")
+      @user_config["token"] ||
+        raise(ProblemWithOptions, "You need to provide the user token in the YAML file")
     end
 
     def user_password
-      @user_config["password"] || raise(ProblemWithOptions, "You need to provide the user password in the YAML file")
+      @user_config["password"] ||
+        raise(ProblemWithOptions, "You need to provide the user password in the YAML file")
     end
 
     def inspect
