@@ -1,3 +1,3 @@
 module GithubControl
-  VERSION = "0.9.0.pre"
+  VERSION = "0.9.1.pre"
 end
