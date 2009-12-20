@@ -45,29 +45,32 @@ module GithubControl
     end
 
     def action_name
-      @action_name ||= @args.shift || raise(ProblemWithOptions, "Please provide an action to run")
+      @action_name ||= @args.shift || raise(ProblemWithOptions,
+        "Please provide an action to run")
     end
 
     def console
-      @console ||= Console.new(user_config)
+      @console ||= Console.new(config)
     end
 
-    def user_config
-      config["user"] || raise(ProblemWithOptions, "You need to provide user data in the YAML file")
+    def environment
+      @env ||= options[:environment] || raise(ProblemWithOptions,
+        "Please provide an environment to use")
     end
 
     def config
-      @config ||= YAML.load_file(config_filename)
+      @config ||= YAML.load_file(config_file)[environment]
     end
 
-    def config_filename
-      options[:config_filename] || raise(ProblemWithOptions, "You need to provide the path to the YAML filename")
+    def config_file
+      options[:config] || raise(ProblemWithOptions,
+        "You need to provide the path to the YAML filename")
     end
 
     def options
       @options ||= {
         :debug => false,
-        :argv => @args,
+        :argv  => @args,
       }
     end
 
@@ -86,7 +89,11 @@ module GithubControl
         }
 
         opts.on("-c filename", "--config filename", "Load the config from this YAML file") do |filename|
-          options[:config_filename] = filename
+          options[:config] = filename
+        end
+
+        opts.on("-e ENV", "Access this environment") do |env|
+          options[:environment] = env
         end
 
         opts.on("-v", "--version", "Display the github version, and exit.") do
