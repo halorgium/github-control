@@ -23,22 +23,8 @@ module GithubControl
       end
     end
 
-    def get(path, params={})
-      RestClient.get(url_for(path), params)
-    end
-
     def url_for(path)
       "http://github.com/api/v2/json#{path}"
-    end
-
-    def cookies
-      @cookies ||= session_cookie
-    end
-
-    def session_cookie
-      response = raw_post("/session", {:login => user_name,
-        :password => user_password}, {}, :auto_redirect => false)
-      response.headers[:set_cookie].split(";").first
     end
 
     def user_name

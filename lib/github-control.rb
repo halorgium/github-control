@@ -25,7 +25,6 @@ require 'github-control/user'
 require 'github-control/repository'
 require 'github-control/repositories'
 require 'github-control/collaborators'
-require 'github-control/post_receive_urls'
 
 require 'github-control/action'
 require 'github-control/actions/repositories'
