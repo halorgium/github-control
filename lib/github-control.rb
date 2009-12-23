@@ -1,14 +1,7 @@
 require 'yaml'
-
-begin
-  require 'json'
-rescue LoadError
-  require 'rubygems'
-  require 'json'
-end
-
-require 'rack/client'
+require 'json'
 require 'nokogiri'
+require 'rack/client'
 
 module GithubControl
   class Error < StandardError; end
