@@ -11,15 +11,21 @@ module GithubControl
     def create(user)
       @repository.owner.cli.post("/repos/collaborators/" \
         "#{@repository.name}/add/#{user}")
+      set << @repository.owner.cli.user_for(user)
     end
 
     def delete(user)
       @repository.owner.cli.post("/repos/collaborators/" \
         "#{@repository.name}/remove/#{user}")
+      set.delete_if { |u| u.name == user }
     end
 
     def each(&block)
       set.each(&block)
+    end
+
+    def size
+      set.size
     end
 
     def set
