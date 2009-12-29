@@ -1,4 +1,4 @@
-spec/config.yml
+test/config.yml
 tmp
 pkg
 gbin
