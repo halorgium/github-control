@@ -7,7 +7,7 @@ rescue LoadError
   require 'json'
 end
 
-require 'rest_client'
+require 'rack/client'
 require 'nokogiri'
 
 module GithubControl

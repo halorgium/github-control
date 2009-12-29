@@ -1,8 +1,9 @@
+clear_sources
 source "http://gemcutter.org"
 
 gem "json"
 gem "nokogiri"
-gem "rest-client"
+gem "rack-client", ">=0.2.2"
 
 only :test do
   gem "rake"

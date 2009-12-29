@@ -15,9 +15,9 @@ module GithubControl
 
     def post(path, params={})
       params.merge!(:login => user_name, :token => user_token)
-      data = JSON.parse(RestClient.post(url_for(path), params))
+      data = JSON.parse(Rack::Client.post(url_for(path), params).body)
       if error = data["error"]
-        raise APIError, error.first["error"]
+        raise APIError, error.inspect
       else
         data
       end
