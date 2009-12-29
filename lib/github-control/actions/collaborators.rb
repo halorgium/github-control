@@ -22,11 +22,15 @@ module GithubControl
       end
 
       def repository
-        user.repo_for(options[:repository_name] || raise(ProblemWithOptions, "Please specify a repository"))
+        user.repositories.get(options[:repository_name] || raise(ProblemWithOptions, "Please specify a repository"))
       end
 
       def user
-        @cli.console.user_for(options[:user_name] || raise(ProblemWithOptions, "Please specify a user"))
+        if options[:user_name]
+          @cli.console.user_for(options[:user_name])
+        else
+          @cli.console.current_user
+        end
       end
     end
   end

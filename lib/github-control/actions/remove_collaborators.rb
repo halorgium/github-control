@@ -19,13 +19,13 @@ module GithubControl
         unless repository.collaborators.include?(user)
           puts "#{user.name} is not a collaborator"
         else
-          repository.collaborators.delete(user)
+          repository.collaborators.delete(user.name)
           puts "Done"
         end
       end
 
       def repository
-        @cli.console.current_user.repo_for(options[:repository_name] || raise(ProblemWithOptions, "Please specify a repository"))
+        @cli.console.current_user.repositories.get(options[:repository_name] || raise(ProblemWithOptions, "Please specify a repository"))
       end
 
       def user

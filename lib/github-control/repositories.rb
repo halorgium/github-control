@@ -18,6 +18,10 @@ module GithubControl
     end
 
     def [](name)
+      get(name)
+    end
+
+    def get(name)
       set.detect { |r| r.name == name }
     end
 

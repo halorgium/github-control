@@ -19,13 +19,13 @@ module GithubControl
         if repository.collaborators.include?(user)
           puts "#{user.name} is already a collaborator"
         else
-          repository.collaborators << user
+          repository.collaborators.create(user.name)
           puts "Done"
         end
       end
 
       def repository
-        @cli.console.current_user.repo_for(options[:repository_name] || raise(ProblemWithOptions, "Please specify a repository"))
+        @cli.console.current_user.repositories.get(options[:repository_name] || raise(ProblemWithOptions, "Please specify a repository"))
       end
 
       def user
