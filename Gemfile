@@ -1,9 +1,8 @@
 clear_sources
 source "http://gemcutter.org"
 
-only :bundle do
+only :release do
   gem "json"
-  gem "nokogiri"
   gem "rack-client", ">=0.2.2"
 end
 

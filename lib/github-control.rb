@@ -1,6 +1,5 @@
 require 'yaml'
 require 'json'
-require 'nokogiri'
 require 'rack/client'
 
 module GithubControl
