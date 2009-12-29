@@ -1,16 +1,6 @@
 require 'rake/gempackagetask'
-require "spec/rake/spectask"
-require File.dirname(__FILE__) + '/lib/github-control/version'
-
-desc "Default: run specs"
-task :default => :spec
-
-desc "Run specs"
-Spec::Rake::SpecTask.new(:spec) do |t|
-  t.libs << "lib" << "spec"
-  t.spec_opts << "-c -D -b"
-  t.pattern = "spec/**/*_spec.rb"
-end
+require File.dirname(__FILE__) + '/lib/github-control'
+Bundler.require_env(:test)
 
 spec = Gem::Specification.new do |s|
   s.name = "github-control"
@@ -28,15 +18,18 @@ spec = Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.files = ["config/example.yml"]
-  %w{ bin lib spec }.map do |dir|
+  %w{ bin lib }.map do |dir|
     s.files += Dir["#{dir}/**/*.rb"]
   end
 
   s.executables =['github-control']
   s.default_executable = 'github-control'
 
-  s.add_dependency("rest-client", [">= 0.9.2"])
-  s.add_dependency("json", [">= 1.1.3"])
+  manifest = Bundler::Dsl.load_gemfile(File.dirname(__FILE__) + '/Gemfile')
+  manifest.dependencies.each do |d|
+    next unless d.only && d.only.include?('release')
+    s.add_dependency(d.name, d.version)
+  end
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|

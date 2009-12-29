@@ -1,20 +1,16 @@
 clear_sources
 source "http://gemcutter.org"
 
-gem "json"
-gem "nokogiri"
-gem "rack-client", ">=0.2.2"
+only :bundle do
+  gem "json"
+  gem "nokogiri"
+  gem "rack-client", ">=0.2.2"
+end
 
 only :test do
   gem "rake"
-  gem "rspec"
-  gem "diff-lcs"
-  gem "rr"
-  gem "randexp"
-  gem "ruby-debug"
+  gem "bundler", ">=0.7.0"
 end
 
 disable_system_gems
 bin_path "gbin"
-
-# vim:ft=ruby
