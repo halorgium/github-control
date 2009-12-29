@@ -3,6 +3,8 @@ require 'irb'
 module GithubControl
   module Actions
     class Shell < Action
+      register :shell
+
       def add_options(parser)
       end
 

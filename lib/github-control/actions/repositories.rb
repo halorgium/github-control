@@ -1,6 +1,8 @@
 module GithubControl
   module Actions
     class Repositories < Action
+      register :list
+
       def add_options(parser)
         parser.on("-U name", "--user name", "The user to list the repositories") do |user_name|
           options[:user_name] = user_name

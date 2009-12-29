@@ -1,6 +1,8 @@
 module GithubControl
   module Actions
     class RemoveCollaborators < Action
+      register :remove_collab
+
       def add_options(parser)
         parser.on("-R name", "--repository name", "The repository on Github") do |repository_name|
           options[:repository_name] = repository_name

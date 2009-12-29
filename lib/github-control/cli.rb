@@ -15,8 +15,6 @@ module GithubControl
       option_parser.parse!(@args)
       current_action.call
     rescue ProblemWithOptions, OptionParser::ParseError => e
-      puts e.backtrace
-      $stderr.puts
       $stderr.puts e.message
       $stderr.puts
       $stderr.puts option_parser
@@ -28,25 +26,20 @@ module GithubControl
     end
 
     def create_action
-      case action_name
-      when "list"
-        Actions::Repositories.new(self)
-      when "shell"
-        Actions::Shell.new(self)
-      when "collab"
-        Actions::Collaborators.new(self)
-      when "add_collab"
-        Actions::AddCollaborators.new(self)
-      when "remove_collab"
-        Actions::RemoveCollaborators.new(self)
+      if action = Action.set[action_name]
+        action.new(self)
       else
-        raise ProblemWithOptions, "#{action_name} is not a valid action"
+        raise ProblemWithOptions, "#{action_name} is not a valid action\nChoose one of #{available_actions}"
       end
     end
 
     def action_name
       @action_name ||= @args.shift || raise(ProblemWithOptions,
-        "Please provide an action to run")
+        "Please provide an action to run\nChoose one of #{available_actions}")
+    end
+
+    def available_actions
+      Action.set.keys.join(", ")
     end
 
     def console
